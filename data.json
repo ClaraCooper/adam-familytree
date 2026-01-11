@@ -71,7 +71,577 @@
                                     {
                                       "name": "Noé",
                                       "children": [
-                                        { "name": "Sém", "branchKey": "SHEM" },
+                                        {
+                                          "name": "Sém",
+                                          "branchKey": "SHEM",
+                                          "children": [
+                                            {
+                                              "name": "Arpaksád",
+                                              "children": [
+                                                {
+                                                  "name": "Selah",
+                                                  "children": [
+                                                    {
+                                                      "name": "Héber",
+                                                      "children": [
+                                                        {
+                                                          "name": "Peleg",
+                                                          "children": [
+                                                            {
+                                                              "name": "Reú",
+                                                              "children": [
+                                                                {
+                                                                  "name": "Serúg",
+                                                                  "children": [
+                                                                    {
+                                                                      "name": "Náhór",
+                                                                      "children": [
+                                                                        {
+                                                                          "name": "Táré",
+                                                                          "children": [
+                                                                            {
+                                                                              "name": "Ábrahám",
+                                                                              "branchKey": "ABRAHAMIC_MAIN",
+                                                                              "flags": ["mainline"],
+                                                                              "children": [
+                                                                                {
+                                                                                  "name": "Izsák",
+                                                                                  "flags": ["mainline"],
+                                                                                  "children": [
+                                                                                    {
+                                                                                      "name": "Jákób",
+                                                                                      "flags": ["mainline"],
+                                                                                      "children": [
+                                                                                        {
+                                                                                          "name": "Júda",
+                                                                                          "branchKey": "JUDAH",
+                                                                                          "flags": ["mainline"],
+                                                                                          "children": [
+                                                                                            {
+                                                                                              "name": "Pérecz",
+                                                                                              "flags": ["mainline"],
+                                                                                              "children": [
+                                                                                                {
+                                                                                                  "name": "Heczrón",
+                                                                                                  "flags": ["mainline"],
+                                                                                                  "children": [
+                                                                                                    {
+                                                                                                      "name": "Rám",
+                                                                                                      "flags": ["mainline"],
+                                                                                                      "children": [
+                                                                                                        {
+                                                                                                          "name": "Amminádáb",
+                                                                                                          "flags": ["mainline"],
+                                                                                                          "children": [
+                                                                                                            {
+                                                                                                              "name": "Náhson",
+                                                                                                              "flags": ["mainline"],
+                                                                                                              "children": [
+                                                                                                                {
+                                                                                                                  "name": "Szalmon",
+                                                                                                                  "flags": ["mainline"],
+                                                                                                                  "children": [
+                                                                                                                    {
+                                                                                                                      "name": "Boáz",
+                                                                                                                      "flags": ["mainline"],
+                                                                                                                      "children": [
+                                                                                                                        {
+                                                                                                                          "name": "Óbéd",
+                                                                                                                          "flags": ["mainline"],
+                                                                                                                          "children": [
+                                                                                                                            {
+                                                                                                                              "name": "Isai",
+                                                                                                                              "flags": ["mainline"],
+                                                                                                                              "children": [
+                                                                                                                                {
+                                                                                                                                  "name": "Dávid",
+                                                                                                                                  "branchKey": "DAVIDIC",
+                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                  "children": [
+                                                                                                                                    {
+                                                                                                                                      "name": "Máté (Salamon-vonal)",
+                                                                                                                                      "children": [
+                                                                                                                                        {
+                                                                                                                                          "name": "Salamon",
+                                                                                                                                          "branchKey": "DAVIDIC",
+                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                          "children": [
+                                                                                                                                            {
+                                                                                                                                              "name": "Rechabeám",
+                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                              "children": [
+                                                                                                                                                {
+                                                                                                                                                  "name": "Abijjá",
+                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                  "children": [
+                                                                                                                                                    {
+                                                                                                                                                      "name": "Ászá",
+                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                      "children": [
+                                                                                                                                                        {
+                                                                                                                                                          "name": "Jósáfát",
+                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                          "children": [
+                                                                                                                                                            {
+                                                                                                                                                              "name": "Jórám",
+                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                              "children": [
+                                                                                                                                                                {
+                                                                                                                                                                  "name": "Uzzijjá",
+                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                  "children": [
+                                                                                                                                                                    {
+                                                                                                                                                                      "name": "Jótám",
+                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                      "children": [
+                                                                                                                                                                        {
+                                                                                                                                                                          "name": "Ácház",
+                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                          "children": [
+                                                                                                                                                                            {
+                                                                                                                                                                              "name": "Ezékiás",
+                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                              "children": [
+                                                                                                                                                                                {
+                                                                                                                                                                                  "name": "Manassé",
+                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                  "children": [
+                                                                                                                                                                                    {
+                                                                                                                                                                                      "name": "Ámon",
+                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                      "children": [
+                                                                                                                                                                                        {
+                                                                                                                                                                                          "name": "Jósiás",
+                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                          "children": [
+                                                                                                                                                                                            {
+                                                                                                                                                                                              "name": "Jekonjá",
+                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                {
+                                                                                                                                                                                                  "name": "Sealtíél",
+                                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                    {
+                                                                                                                                                                                                      "name": "Zerubbábel",
+                                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                                      "children": [
+                                                                                                                                                                                                        {
+                                                                                                                                                                                                          "name": "Abiúd",
+                                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                                          "children": [
+                                                                                                                                                                                                            {
+                                                                                                                                                                                                              "name": "Eljákim",
+                                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                                {
+                                                                                                                                                                                                                  "name": "Ázór",
+                                                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                      "name": "Cádók",
+                                                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                                                      "children": [
+                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                          "name": "Ákhim",
+                                                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                                                          "children": [
+                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                              "name": "Elíúd",
+                                                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                  "name": "Eleázár",
+                                                                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                      "name": "Mattán",
+                                                                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                                                                      "children": [
+                                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                                          "name": "Jákób",
+                                                                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                                                                          "children": [
+                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                              "name": "József (Máté)",
+                                                                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                                  "name": "Jézus (Máté)",
+                                                                                                                                                                                                                                                  "flags": ["mainline"]
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                              ]
+                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                          ]
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                  ]
+                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                              ]
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                          ]
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                  ]
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                              ]
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                          ]
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                      ]
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                  ]
+                                                                                                                                                                                                }
+                                                                                                                                                                                              ]
+                                                                                                                                                                                            }
+                                                                                                                                                                                          ]
+                                                                                                                                                                                        }
+                                                                                                                                                                                      ]
+                                                                                                                                                                                    }
+                                                                                                                                                                                  ]
+                                                                                                                                                                                }
+                                                                                                                                                                              ]
+                                                                                                                                                                            }
+                                                                                                                                                                          ]
+                                                                                                                                                                        }
+                                                                                                                                                                      ]
+                                                                                                                                                                    }
+                                                                                                                                                                  ]
+                                                                                                                                                                }
+                                                                                                                                                              ]
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      ]
+                                                                                                                                                    }
+                                                                                                                                                  ]
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          ]
+                                                                                                                                        }
+                                                                                                                                      ]
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                      "name": "Lukács (Nátán-vonal)",
+                                                                                                                                      "children": [
+                                                                                                                                        {
+                                                                                                                                          "name": "Nátán",
+                                                                                                                                          "branchKey": "DAVIDIC",
+                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                          "children": [
+                                                                                                                                            {
+                                                                                                                                              "name": "Mattatá",
+                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                              "children": [
+                                                                                                                                                {
+                                                                                                                                                  "name": "Menna",
+                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                  "children": [
+                                                                                                                                                    {
+                                                                                                                                                      "name": "Meleá",
+                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                      "children": [
+                                                                                                                                                        {
+                                                                                                                                                          "name": "Eljákim",
+                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                          "children": [
+                                                                                                                                                            {
+                                                                                                                                                              "name": "Jónán",
+                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                              "children": [
+                                                                                                                                                                {
+                                                                                                                                                                  "name": "József",
+                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                  "children": [
+                                                                                                                                                                    {
+                                                                                                                                                                      "name": "Mattatiás",
+                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                      "children": [
+                                                                                                                                                                        {
+                                                                                                                                                                          "name": "Ámós",
+                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                          "children": [
+                                                                                                                                                                            {
+                                                                                                                                                                              "name": "Náhum",
+                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                              "children": [
+                                                                                                                                                                                {
+                                                                                                                                                                                  "name": "Eszli",
+                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                  "children": [
+                                                                                                                                                                                    {
+                                                                                                                                                                                      "name": "Naggai",
+                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                      "children": [
+                                                                                                                                                                                        {
+                                                                                                                                                                                          "name": "Máath",
+                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                          "children": [
+                                                                                                                                                                                            {
+                                                                                                                                                                                              "name": "Mattatiás",
+                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                {
+                                                                                                                                                                                                  "name": "Semein",
+                                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                    {
+                                                                                                                                                                                                      "name": "Jósék",
+                                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                                      "children": [
+                                                                                                                                                                                                        {
+                                                                                                                                                                                                          "name": "Jóda",
+                                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                                          "children": [
+                                                                                                                                                                                                            {
+                                                                                                                                                                                                              "name": "Joanán",
+                                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                                {
+                                                                                                                                                                                                                  "name": "Résá",
+                                                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                      "name": "Zerubbábel",
+                                                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                                                      "children": [
+                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                          "name": "Sealtíél",
+                                                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                                                          "children": [
+                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                              "name": "Néri",
+                                                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                  "name": "Melkí",
+                                                                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                      "name": "Addi",
+                                                                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                                                                      "children": [
+                                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                                          "name": "Kószám",
+                                                                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                                                                          "children": [
+                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                              "name": "Elmadám",
+                                                                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                                  "name": "Ér",
+                                                                                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                      "name": "Jósuá",
+                                                                                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                                                                                      "children": [
+                                                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                                                          "name": "Eliezer",
+                                                                                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                                                                                          "children": [
+                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                              "name": "Jórim",
+                                                                                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                                                  "name": "Mátát",
+                                                                                                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                                      "name": "Lévi",
+                                                                                                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                                                                                                      "children": [
+                                                                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                                                                          "name": "Simeon",
+                                                                                                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                                                                                                          "children": [
+                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                              "name": "Júda",
+                                                                                                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                                                                  "name": "József",
+                                                                                                                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                                                      "name": "Jónám",
+                                                                                                                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                                                                                                                      "children": [
+                                                                                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                                                                                          "name": "Eljákim",
+                                                                                                                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                                                                                                                          "children": [
+                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                              "name": "Meleá",
+                                                                                                                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                                                                                  "name": "Menna",
+                                                                                                                                                                                                                                                                                                  "flags": ["mainline"],
+                                                                                                                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                                                                      "name": "Mattatá",
+                                                                                                                                                                                                                                                                                                      "flags": ["mainline"],
+                                                                                                                                                                                                                                                                                                      "children": [
+                                                                                                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                                                                                                          "name": "Nátán",
+                                                                                                                                                                                                                                                                                                          "flags": ["mainline"],
+                                                                                                                                                                                                                                                                                                          "children": [
+                                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                              "name": "Dávid (Lukács ág kezdete)",
+                                                                                                                                                                                                                                                                                                              "flags": ["mainline"],
+                                                                                                                                                                                                                                                                                                              "children": [
+                                                                                                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                                                                                                  "name": "József (Lukács)",
+                                                                                                                                                                                                                                                                                                                  "flags": ["mainline", "maternal"],
+                                                                                                                                                                                                                                                                                                                  "children": [
+                                                                                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                                                                                      "name": "Jézus (Lukács)",
+                                                                                                                                                                                                                                                                                                                      "flags": ["mainline", "maternal"]
+                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                  ]
+                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                              ]
+                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                          ]
+                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                  ]
+                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                              ]
+                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                          ]
+                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                  ]
+                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                              ]
+                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                          ]
+                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                  ]
+                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                              ]
+                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                          ]
+                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                  ]
+                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                              ]
+                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                          ]
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                  ]
+                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                              ]
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                          ]
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                  ]
+                                                                                                                                                                                                                }
+                                                                                                                                                                                                              ]
+                                                                                                                                                                                                            }
+                                                                                                                                                                                                          ]
+                                                                                                                                                                                                        }
+                                                                                                                                                                                                      ]
+                                                                                                                                                                                                    }
+                                                                                                                                                                                                  ]
+                                                                                                                                                                                                }
+                                                                                                                                                                                              ]
+                                                                                                                                                                                            }
+                                                                                                                                                                                          ]
+                                                                                                                                                                                        }
+                                                                                                                                                                                      ]
+                                                                                                                                                                                    }
+                                                                                                                                                                                  ]
+                                                                                                                                                                                }
+                                                                                                                                                                              ]
+                                                                                                                                                                            }
+                                                                                                                                                                          ]
+                                                                                                                                                                        }
+                                                                                                                                                                      ]
+                                                                                                                                                                    }
+                                                                                                                                                                  ]
+                                                                                                                                                                }
+                                                                                                                                                              ]
+                                                                                                                                                            }
+                                                                                                                                                          ]
+                                                                                                                                                        }
+                                                                                                                                                      ]
+                                                                                                                                                    }
+                                                                                                                                                  ]
+                                                                                                                                                }
+                                                                                                                                              ]
+                                                                                                                                            }
+                                                                                                                                          ]
+                                                                                                                                        }
+                                                                                                                                      ]
+                                                                                                                                    }
+                                                                                                                                  ]
+                                                                                                                                }
+                                                                                                                              ]
+                                                                                                                            }
+                                                                                                                          ]
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  ]
+                                                                                                                }
+                                                                                                              ]
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      ]
+                                                                                                    }
+                                                                                                  ]
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          ]
+                                                                                        }
+                                                                                      ]
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            {
+                                                                              "name": "Izmael",
+                                                                              "branchKey": "ISHMAEL"
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
                                         { "name": "Hám", "branchKey": "HAM" },
                                         { "name": "Jáfet", "branchKey": "JAPHETH" }
                                       ]
