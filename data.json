@@ -71,9 +71,9 @@
                                     {
                                       "name": "Noé",
                                       "children": [
-                                        { "name": "Sém" },
-                                        { "name": "Hám" },
-                                        { "name": "Jáfet" }
+                                        { "name": "Sém", "branchKey": "SHEM" },
+                                        { "name": "Hám", "branchKey": "HAM" },
+                                        { "name": "Jáfet", "branchKey": "JAPHETH" }
                                       ]
                                     }
                                   ]
