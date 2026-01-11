@@ -2,10 +2,12 @@
   "name": "Ádám",
   "born_am": 1,
   "died_am": 930,
+  "branchKey": "ROOT",
   "children": [
     {
       "name": "Káin",
       "branch": "kain",
+      "branchKey": "CAIN",
       "children": [
         {
           "name": "Énókh (Káin ága)",
@@ -43,50 +45,35 @@
       "branch": "set",
       "born_am": 130,
       "died_am": 1042,
+      "branchKey": "SETH",
       "children": [
         {
           "name": "Énós",
-          "born_am": 235,
-          "died_am": 1140,
           "children": [
             {
               "name": "Kénán",
-              "born_am": 325,
-              "died_am": 1235,
               "children": [
                 {
                   "name": "Mahalalél",
-                  "born_am": 395,
-                  "died_am": 1290,
                   "children": [
                     {
                       "name": "Járed",
-                      "born_am": 460,
-                      "died_am": 1422,
                       "children": [
                         {
                           "name": "Énókh",
-                          "born_am": 622,
-                          "died_am": 987,
                           "children": [
                             {
                               "name": "Metúselah",
-                              "born_am": 687,
-                              "died_am": 1656,
                               "children": [
                                 {
                                   "name": "Lámek",
-                                  "born_am": 874,
-                                  "died_am": 1651,
                                   "children": [
-                                    { 
+                                    {
                                       "name": "Noé",
-                                      "born_am": 1056,
-                                      "died_am": 2006,
                                       "children": [
-                                        { "name": "Sém", "born_am": 1558 },
-                                        { "name": "Hám", "born_am": 1558 },
-                                        { "name": "Jáfet", "born_am": 1558 }
+                                        { "name": "Sém" },
+                                        { "name": "Hám" },
+                                        { "name": "Jáfet" }
                                       ]
                                     }
                                   ]
