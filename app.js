@@ -17,15 +17,18 @@ window.addEventListener("DOMContentLoaded", async () => {
     HAM: "#CC79A7",
     JAPHETH: "#E69F00",
 
+    ABRAHAMIC_MAIN: "#56B4E9",
+    ISHMAEL: "#F0E442",
+    ESAU: "#A52A2A",
+
     JUDAH: "#8B5CF6",
     DAVIDIC: "#111827",
     LEVITE: "#0F766E",
 
-    // fallback
     DEFAULT: "#333333"
   };
 
-  // Biztonságos branch feloldás (öröklődik a szülőtől, ha a node-on nincs megadva)
+  // Branch öröklés: ha egy node-on nincs branchKey, a szülőtől örökli
   const resolveBranchKey = (d) => {
     let cur = d;
     while (cur) {
@@ -69,21 +72,18 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (!res.ok) throw new Error(`A data.json nem tölthető be (HTTP ${res.status}).`);
     const data = await res.json();
 
-    // Layout (A + C: kompaktabb függőleges tér)
+    // Layout (A + C: kompaktabb vertikális távolság)
     const root = d3.hierarchy(data);
-    const treeLayout = d3.tree().nodeSize([110, 145]); // korábban 170 volt
+    const treeLayout = d3.tree().nodeSize([110, 145]); // korábban 170 volt nálad
     treeLayout(root);
 
-    // ====== LINKEK ======
-    const link = g.selectAll(".link")
+    // ====== Linkek ======
+    g.selectAll(".link")
       .data(root.links())
       .enter()
       .append("path")
       .attr("class", "link")
-      .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y));
-
-    // Link stílus: ág színe + maternal jelölés
-    link
+      .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
       .attr("stroke", (l) => {
         const bk = resolveBranchKey(l.target);
         return BRANCH_COLORS[bk] || BRANCH_COLORS.DEFAULT;
@@ -92,7 +92,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       .attr("stroke-dasharray", (l) => hasFlag(l.target, "maternal") ? "3,4" : null)
       .attr("opacity", (l) => hasFlag(l.target, "uncertain") ? 0.65 : 1);
 
-    // ====== NODE-OK ======
+    // ====== Node csoport ======
     const node = g
       .selectAll(".node")
       .data(root.descendants())
@@ -107,17 +107,17 @@ window.addEventListener("DOMContentLoaded", async () => {
       .attr("x", 0)
       .attr("y", 0)
       .attr("dy", "0.35em")
-      .attr("text-anchor", "middle") // ✅ középen
+      .attr("text-anchor", "middle") // ✅ nálad ez volt jó
       .text((d) => d.data.name ?? "");
 
-    // Doboz a szöveg alá, automatikus szélességgel + ág színű kerettel
+    // Doboz a szöveg alá, automatikus szélességgel + színes kerettel
     node
       .insert("rect", "text")
       .attr("y", -16)
       .attr("height", 32)
       .attr("rx", 8)
-      .attr("fill", "#e8f0ff") // marad világos, olvasható
-      .attr("opacity", (d) => hasFlag(d, "uncertain") ? 0.75 : 1)
+      .attr("fill", "#ffffff") // tisztább olvashatóság, mint a kékes
+      .attr("opacity", (d) => hasFlag(d, "uncertain") ? 0.80 : 1)
       .each(function (d) {
         const parent = this.parentNode;
         const textEl = d3.select(parent).select("text").node();
@@ -144,8 +144,7 @@ window.addEventListener("DOMContentLoaded", async () => {
           .attr("stroke-dasharray", hasFlag(d, "maternal") ? "3,4" : null);
       });
 
-    // ====== “Mária / anyai ág” badge ======
-    // Kicsi kör + “M” a node jobb felső sarkán
+    // ====== Maternal “M” badge (B módban majd csak a Lukács-végpontokra tesszük) ======
     const maternalNodes = node.filter(d => hasFlag(d, "maternal"));
     maternalNodes.append("circle")
       .attr("cx", 62)
@@ -165,24 +164,26 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     // ====== AUTO-FIT / AUTO-CENTER ======
     const bounds = g.node().getBBox();
-    const padding = 60;
+    const fullWidth = bounds.width;
+    const fullHeight = bounds.height;
 
+    const padding = 50; // picit “map-like”, kevesebb üres szél
     const scale = Math.min(
-      (width - padding) / bounds.width,
-      (height - padding) / bounds.height
+      (width - padding) / fullWidth,
+      (height - padding) / fullHeight
     );
 
     const clampedScale = Math.max(0.25, Math.min(2.0, scale));
 
-    const translateX = (width - bounds.width * clampedScale) / 2 - bounds.x * clampedScale;
-    const translateY = (height - bounds.height * clampedScale) / 2 - bounds.y * clampedScale;
+    const translateX = (width - fullWidth * clampedScale) / 2 - bounds.x * clampedScale;
+    const translateY = (height - fullHeight * clampedScale) / 2 - bounds.y * clampedScale;
 
     svg.call(
       zoom.transform,
       d3.zoomIdentity.translate(translateX, translateY).scale(clampedScale)
     );
 
-    setStatus("");
+    setStatus(""); // ok
   } catch (err) {
     console.error(err);
     setStatus(`Hiba: ${err?.message || String(err)}`);
