@@ -1,0 +1,86 @@
+{
+  "name": "Ádám",
+  "born_am": 1,
+  "died_am": 930,
+  "children": [
+    {
+      "name": "Káin",
+      "branch": "kain",
+      "children": [
+        {
+          "name": "Énókh (Káin ága)",
+          "children": [
+            {
+              "name": "Írád",
+              "children": [
+                {
+                  "name": "Mehujáél",
+                  "children": [
+                    {
+                      "name": "Metusáél",
+                      "children": [
+                        {
+                          "name": "Lámek (Káinita)",
+                          "children": [
+                            { "name": "Jábál" },
+                            { "name": "Júbál" },
+                            { "name": "Tubál-Káin" },
+                            { "name": "Naáma" }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sét",
+      "branch": "set",
+      "born_am": 130,
+      "died_am": 1042,
+      "children": [
+        {
+          "name": "Énós",
+          "children": [
+            {
+              "name": "Kénán",
+              "children": [
+                {
+                  "name": "Mahalalél",
+                  "children": [
+                    {
+                      "name": "Járed",
+                      "children": [
+                        {
+                          "name": "Énókh",
+                          "children": [
+                            {
+                              "name": "Metúselah",
+                              "children": [
+                                {
+                                  "name": "Lámek",
+                                  "children": [
+                                    { "name": "Noé" }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
