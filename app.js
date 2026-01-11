@@ -14,12 +14,74 @@ window.addEventListener("DOMContentLoaded", async () => {
     HAM: "#CC79A7",
     JAPHETH: "#E69F00",
 
+    ABRAHAMIC_MAIN: "#56B4E9",
+    ISHMAEL: "#F0E442",
+    ESAU: "#A52A2A",
+
     JUDAH: "#8B5CF6",
     DAVIDIC: "#111827",
     LEVITE: "#0F766E",
 
     DEFAULT: "#333333"
   };
+
+  const BRANCH_LABELS = {
+    ROOT: "Ádám / gyökér",
+    CAIN: "Káin-ága",
+    SETH: "Sét-ága",
+    SHEM: "Sém-ága",
+    HAM: "Hám-ága",
+    JAPHETH: "Jáfet-ága",
+    JUDAH: "Júda-törzs (később)",
+    DAVIDIC: "Dávid-ház (később)",
+    LEVITE: "Lévi / papi ág (később)"
+  };
+
+  function renderLegend() {
+    const el = document.getElementById("legend");
+    if (!el) return;
+
+    const orderedKeys = [
+      "ROOT","CAIN","SETH",
+      "SHEM","HAM","JAPHETH",
+      "JUDAH","DAVIDIC","LEVITE"
+    ];
+
+    const rows = orderedKeys.map(k => {
+      const color = BRANCH_COLORS[k] || BRANCH_COLORS.DEFAULT;
+      const label = BRANCH_LABELS[k] || k;
+      return `
+        <div class="row">
+          <span class="swatch" style="border-color:${color}"></span>
+          <span>${label}</span>
+        </div>
+      `;
+    }).join("");
+
+    el.innerHTML = `
+      <h3>Jelmagyarázat</h3>
+      <div class="group-title">Ágak (színek)</div>
+      ${rows}
+
+      <div class="group-title">Jelölések</div>
+      <div class="row">
+        <span class="line" style="border-top-color:#111827"></span>
+        <span>alap kapcsolat</span>
+      </div>
+      <div class="row">
+        <span class="line dotted" style="border-top-color:#111827"></span>
+        <span><b>anyai ág</b> (Lukács-végpontnál) + “M” jel</span>
+      </div>
+      <div class="row">
+        <span class="swatch" style="border-color:#111827; border-width:3px;"></span>
+        <span><b>kiemelt fővonal</b> (mainline)</span>
+      </div>
+
+      <div class="note">
+        Nimród kiemelését majd akkor tesszük hozzá, amikor ténylegesen felvesszük a fába.
+      </div>
+    `;
+  }
 
   const resolveBranchKey = (d) => {
     let cur = d;
@@ -37,66 +99,10 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (!container) throw new Error("Nem találom a #tree-container elemet.");
     if (!window.d3) throw new Error("A D3 nem töltődött be (CDN hiba vagy nincs internet).");
 
-    // 👇 Ez direkt jelzi, hogy EZ a JS fut (ha F12 Console-t megnézed)
-    console.log("✅ Colored app.js running (v=7)"); 
-    const BRANCH_LABELS = {
-  ROOT: "Ádám / gyökér",
-  CAIN: "Káin-ága",
-  SETH: "Sét-ága",
-  SHEM: "Sém-ága",
-  HAM: "Hám-ága",
-  JAPHETH: "Jáfet-ága",
-  JUDAH: "Júda-törzs (később)",
-  DAVIDIC: "Dávid-ház (később)",
-  LEVITE: "Lévi / papi ág (később)"
-};
+    console.log("✅ Colored app.js running (legend-enabled)");
 
-function renderLegend() {
-  const el = document.getElementById("legend");
-  if (!el) return;
-
-  const orderedKeys = [
-    "ROOT","CAIN","SETH",
-    "SHEM","HAM","JAPHETH",
-    "JUDAH","DAVIDIC","LEVITE"
-  ];
-
-  const rows = orderedKeys.map(k => {
-    const color = BRANCH_COLORS[k] || BRANCH_COLORS.DEFAULT;
-    const label = BRANCH_LABELS[k] || k;
-    return `
-      <div class="row">
-        <span class="swatch" style="border-color:${color}"></span>
-        <span>${label}</span>
-      </div>
-    `;
-  }).join("");
-
-  el.innerHTML = `
-    <h3>Jelmagyarázat</h3>
-    <div class="group-title">Ágak (színek)</div>
-    ${rows}
-
-    <div class="group-title">Jelölések</div>
-    <div class="row">
-      <span class="line" style="border-top-color:#111827"></span>
-      <span>alap kapcsolat</span>
-    </div>
-    <div class="row">
-      <span class="line dotted" style="border-top-color:#111827"></span>
-      <span><b>anyai ág</b> (Lukács-végpontnál) + “M” jel</span>
-    </div>
-    <div class="row">
-      <span class="swatch" style="border-color:#111827; border-width:3px;"></span>
-      <span><b>kiemelt fővonal</b> (mainline)</span>
-    </div>
-
-    <div class="note">
-      Nimród kiemelését majd akkor tesszük hozzá, amikor ténylegesen felvesszük a fába.
-    </div>
-  `;
-}
-
+    // ✅ MOST már biztonságosan meghívható:
+    renderLegend();
 
     const width = container.clientWidth || 900;
     const height = container.clientHeight || 600;
@@ -114,23 +120,21 @@ function renderLegend() {
 
     svg.call(zoom);
 
-    // 👇 Verziózott JSON, hogy az se cache-lődjön
-    const res = await fetch("./data.json?v=7", { cache: "no-store" });
+    const res = await fetch("./data.json?v=8", { cache: "no-store" });
     if (!res.ok) throw new Error(`A data.json nem tölthető be (HTTP ${res.status}).`);
     const data = await res.json();
 
     const root = d3.hierarchy(data);
-    const treeLayout = d3.tree().nodeSize([110, 145]); // A + C (kompaktabb)
+    const treeLayout = d3.tree().nodeSize([110, 145]);
     treeLayout(root);
 
-    // ====== LINKEK ======
-    const links = g.selectAll(".link")
+    // Links
+    g.selectAll(".link")
       .data(root.links())
       .enter()
       .append("path")
       .attr("class", "link")
       .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
-      // Attribútum + style (hogy semmilyen CSS ne írja felül)
       .attr("fill", "none")
       .attr("stroke", (l) => {
         const bk = resolveBranchKey(l.target);
@@ -138,14 +142,9 @@ function renderLegend() {
       })
       .attr("stroke-width", (l) => hasFlag(l.target, "mainline") ? 2.5 : 1.5)
       .attr("stroke-dasharray", (l) => hasFlag(l.target, "maternal") ? "3,4" : null)
-      .style("stroke", (l) => {
-        const bk = resolveBranchKey(l.target);
-        return BRANCH_COLORS[bk] || BRANCH_COLORS.DEFAULT;
-      })
-      .style("stroke-width", (l) => (hasFlag(l.target, "mainline") ? 2.5 : 1.5) + "px")
       .style("opacity", (l) => hasFlag(l.target, "uncertain") ? 0.65 : 1);
 
-    // ====== NODE-OK ======
+    // Nodes
     const node = g.selectAll(".node")
       .data(root.descendants())
       .enter()
@@ -153,7 +152,6 @@ function renderLegend() {
       .attr("class", "node")
       .attr("transform", d => `translate(${d.x},${d.y})`);
 
-    // Text (középen)
     node.append("text")
       .attr("x", 0)
       .attr("y", 0)
@@ -161,7 +159,6 @@ function renderLegend() {
       .attr("text-anchor", "middle")
       .text(d => d.data.name ?? "");
 
-    // Rect (auto szélesség + színezett keret)
     node.insert("rect", "text")
       .attr("y", -16)
       .attr("height", 32)
@@ -186,12 +183,10 @@ function renderLegend() {
           .attr("width", boxW)
           .attr("stroke", stroke)
           .attr("stroke-width", hasFlag(d, "mainline") ? 2.5 : 1.2)
-          .attr("stroke-dasharray", hasFlag(d, "maternal") ? "3,4" : null)
-          .style("stroke", stroke)
-          .style("stroke-width", (hasFlag(d, "mainline") ? 2.5 : 1.2) + "px");
+          .attr("stroke-dasharray", hasFlag(d, "maternal") ? "3,4" : null);
       });
 
-    // Maternal badge (most még nincs használva, de készen áll)
+    // Maternal badge
     const maternalNodes = node.filter(d => hasFlag(d, "maternal"));
     maternalNodes.append("circle")
       .attr("cx", 62)
