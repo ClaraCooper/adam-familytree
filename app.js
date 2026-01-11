@@ -39,6 +39,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     // 👇 Ez direkt jelzi, hogy EZ a JS fut (ha F12 Console-t megnézed)
     console.log("✅ Colored app.js running (v=7)"); 
+    renderLegend() 
     const BRANCH_LABELS = {
   ROOT: "Ádám / gyökér",
   CAIN: "Káin-ága",
