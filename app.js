@@ -78,7 +78,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       </div>
 
       <div class="note">
-        Nimród kiemelését majd akkor tesszük hozzá, amikor ténylegesen felvesszük a fába.
+        Tipp: kattints egy dobozra a részfa nyitásához/csukásához.
       </div>
     `;
   }
@@ -95,13 +95,51 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   const hasFlag = (d, flag) => Array.isArray(d?.data?.flags) && d.data.flags.includes(flag);
 
+  // ---- Collapsible helpers
+  function collapseAll(d) {
+    if (d.children) {
+      d._children = d.children;
+      d._children.forEach(collapseAll);
+      d.children = null;
+    }
+  }
+
+  function expandOneLevel(d) {
+    if (d._children) {
+      d.children = d._children;
+      d._children = null;
+    }
+  }
+
+  function expandAll(d) {
+    expandOneLevel(d);
+    if (d.children) d.children.forEach(expandAll);
+  }
+
+  function findChildByName(parent, name) {
+    const kids = parent.children || parent._children || [];
+    return kids.find(k => k.data?.name === name);
+  }
+
+  // Sét ág lineáris láncán lefelé megyünk, amíg el nem érjük Noét
+  function expandSethToNoah(sethNode) {
+    let cur = sethNode;
+    // biztosítsuk, hogy a lánc látható legyen
+    while (cur) {
+      expandOneLevel(cur);
+      if (cur.data?.name === "Noé") return cur;
+      const kids = cur.children || [];
+      if (kids.length === 0) return null;
+      // ez a vonal nálad egy-gyerekes lánc, így az első gyerek felé haladunk
+      cur = kids[0];
+    }
+    return null;
+  }
+
   try {
     if (!container) throw new Error("Nem találom a #tree-container elemet.");
     if (!window.d3) throw new Error("A D3 nem töltődött be (CDN hiba vagy nincs internet).");
 
-    console.log("✅ Colored app.js running (legend-enabled)");
-
-    // ✅ MOST már biztonságosan meghívható:
     renderLegend();
 
     const width = container.clientWidth || 900;
@@ -120,91 +158,206 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     svg.call(zoom);
 
-    const res = await fetch("./data.json?v=8", { cache: "no-store" });
+    const res = await fetch("./data.json?v=9", { cache: "no-store" });
     if (!res.ok) throw new Error(`A data.json nem tölthető be (HTTP ${res.status}).`);
     const data = await res.json();
 
+    let i = 0;
+
     const root = d3.hierarchy(data);
-    const treeLayout = d3.tree().nodeSize([110, 145]);
-    treeLayout(root);
+    root.x0 = 0;
+    root.y0 = 0;
 
-    // Links
-    g.selectAll(".link")
-      .data(root.links())
-      .enter()
-      .append("path")
-      .attr("class", "link")
-      .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y))
-      .attr("fill", "none")
-      .attr("stroke", (l) => {
-        const bk = resolveBranchKey(l.target);
-        return BRANCH_COLORS[bk] || BRANCH_COLORS.DEFAULT;
-      })
-      .attr("stroke-width", (l) => hasFlag(l.target, "mainline") ? 2.5 : 1.5)
-      .attr("stroke-dasharray", (l) => hasFlag(l.target, "maternal") ? "3,4" : null)
-      .style("opacity", (l) => hasFlag(l.target, "uncertain") ? 0.65 : 1);
+    // 1) Először mindent összecsukunk
+    collapseAll(root);
 
-    // Nodes
-    const node = g.selectAll(".node")
-      .data(root.descendants())
-      .enter()
-      .append("g")
-      .attr("class", "node")
-      .attr("transform", d => `translate(${d.x},${d.y})`);
+    // 2) Alapból ezt kérted nyitva:
+    // - Káin ág Jábál/Júbál/Tubál-Káin/Naáma-ig
+    // - Sét vonal Sém/Hám/Jáfet-ig
+    // - Ábel jelenjen meg (ő Ádám közvetlen gyereke, így root nyitásával látszik)
+    expandOneLevel(root); // Ádám gyermekei látszanak
 
-    node.append("text")
-      .attr("x", 0)
-      .attr("y", 0)
-      .attr("dy", "0.35em")
-      .attr("text-anchor", "middle")
-      .text(d => d.data.name ?? "");
+    // Káin ág: teljesen nyitjuk (ott nincs túl hosszú folytatás)
+    const cain = findChildByName(root, "Káin");
+    if (cain) expandAll(cain);
 
-    node.insert("rect", "text")
-      .attr("y", -16)
-      .attr("height", 32)
-      .attr("rx", 8)
-      .attr("fill", "#ffffff")
-      .each(function (d) {
-        const parent = this.parentNode;
-        const textEl = d3.select(parent).select("text").node();
+    // Sét ág: csak Noéig + Noé gyerekeiig
+    const seth = findChildByName(root, "Sét");
+    if (seth) {
+      const noah = expandSethToNoah(seth);
+      if (noah) {
+        // Noé gyerekei látszódjanak
+        expandOneLevel(noah);
+
+        // de Sém/Hám/Jáfet alatt MOST maradjon csukva minden (áttekinthető első nézet)
+        (noah.children || []).forEach(ch => collapseAll(ch));
+      }
+    }
+
+    // Layout
+    const treeLayout = d3.tree().nodeSize([110, 145]); // kompakt (A + C)
+    const linkGen = d3.linkVertical().x(d => d.x).y(d => d.y);
+
+    function applyNodeBoxSizing(nodeSel) {
+      nodeSel.each(function(d) {
+        const group = d3.select(this);
+        const textEl = group.select("text.label").node();
+        const rect = group.select("rect.box");
 
         let textWidth = 0;
         try { textWidth = textEl ? textEl.getComputedTextLength() : 0; } catch { textWidth = 0; }
 
         const minW = 120;
-        const pad = 26;
+        const pad = 30;
         const boxW = Math.max(minW, textWidth + pad);
 
         const bk = resolveBranchKey(d);
         const stroke = BRANCH_COLORS[bk] || BRANCH_COLORS.DEFAULT;
 
-        d3.select(this)
+        rect
           .attr("x", -boxW / 2)
           .attr("width", boxW)
           .attr("stroke", stroke)
           .attr("stroke-width", hasFlag(d, "mainline") ? 2.5 : 1.2)
           .attr("stroke-dasharray", hasFlag(d, "maternal") ? "3,4" : null);
       });
+    }
 
-    // Maternal badge
-    const maternalNodes = node.filter(d => hasFlag(d, "maternal"));
-    maternalNodes.append("circle")
-      .attr("cx", 62)
-      .attr("cy", -16)
-      .attr("r", 8)
-      .attr("fill", "#ffffff")
-      .attr("stroke", "#111827")
-      .attr("stroke-width", 1);
+    function update(source) {
+      treeLayout(root);
 
-    maternalNodes.append("text")
-      .attr("x", 62)
-      .attr("y", -16)
-      .attr("dy", "0.35em")
-      .attr("text-anchor", "middle")
-      .attr("font-size", 10)
-      .text("M");
+      const nodes = root.descendants();
+      const links = root.links();
 
-    // Auto-fit / center
+      // Join nodes
+      const node = g.selectAll("g.node")
+        .data(nodes, d => d.id || (d.id = ++i));
+
+      const nodeEnter = node.enter()
+        .append("g")
+        .attr("class", "node")
+        .attr("transform", `translate(${source.x0},${source.y0})`)
+        .style("cursor", "pointer")
+        .on("click", (event, d) => {
+          // toggle
+          if (d.children) {
+            d._children = d.children;
+            d.children = null;
+          } else if (d._children) {
+            d.children = d._children;
+            d._children = null;
+          }
+          update(d);
+        });
+
+      // Rect
+      nodeEnter.append("rect")
+        .attr("class", "box")
+        .attr("y", -16)
+        .attr("height", 32)
+        .attr("rx", 8)
+        .attr("fill", "#ffffff");
+
+      // Label + kis jel a csukható node-okhoz
+      nodeEnter.append("text")
+        .attr("class", "label")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("dy", "0.35em")
+        .attr("text-anchor", "middle")
+        .text(d => {
+          const hasKids = (d.children && d.children.length) || (d._children && d._children.length);
+          const marker = hasKids ? (d.children ? " ▼" : " ▶") : "";
+          return (d.data.name ?? "") + marker;
+        });
+
+      // Maternal badge
+      const maternalEnter = nodeEnter.filter(d => hasFlag(d, "maternal"));
+      maternalEnter.append("circle")
+        .attr("cx", 62)
+        .attr("cy", -16)
+        .attr("r", 8)
+        .attr("fill", "#ffffff")
+        .attr("stroke", "#111827")
+        .attr("stroke-width", 1);
+
+      maternalEnter.append("text")
+        .attr("x", 62)
+        .attr("y", -16)
+        .attr("dy", "0.35em")
+        .attr("text-anchor", "middle")
+        .attr("font-size", 10)
+        .text("M");
+
+      // Update + merge
+      const nodeMerge = nodeEnter.merge(node);
+
+      // Update label (marker frissítése)
+      nodeMerge.select("text.label")
+        .text(d => {
+          const hasKids = (d.children && d.children.length) || (d._children && d._children.length);
+          const marker = hasKids ? (d.children ? " ▼" : " ▶") : "";
+          return (d.data.name ?? "") + marker;
+        });
+
+      // Apply box sizing + coloring
+      applyNodeBoxSizing(nodeMerge);
+
+      nodeMerge.transition()
+        .duration(350)
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+
+      node.exit().transition()
+        .duration(250)
+        .attr("transform", `translate(${source.x},${source.y})`)
+        .remove();
+
+      // Join links
+      const link = g.selectAll("path.link")
+        .data(links, d => d.target.id);
+
+      const linkEnter = link.enter()
+        .append("path")
+        .attr("class", "link")
+        .attr("fill", "none")
+        .attr("d", () => {
+          const o = { x: source.x0, y: source.y0 };
+          return linkGen({ source: o, target: o });
+        });
+
+      const linkMerge = linkEnter.merge(link);
+
+      linkMerge
+        .attr("stroke", (l) => {
+          const bk = resolveBranchKey(l.target);
+          return BRANCH_COLORS[bk] || BRANCH_COLORS.DEFAULT;
+        })
+        .attr("stroke-width", (l) => hasFlag(l.target, "mainline") ? 2.5 : 1.5)
+        .attr("stroke-dasharray", (l) => hasFlag(l.target, "maternal") ? "3,4" : null)
+        .style("opacity", (l) => hasFlag(l.target, "uncertain") ? 0.65 : 1);
+
+      linkMerge.transition()
+        .duration(350)
+        .attr("d", linkGen);
+
+      link.exit().transition()
+        .duration(250)
+        .attr("d", () => {
+          const o = { x: source.x, y: source.y };
+          return linkGen({ source: o, target: o });
+        })
+        .remove();
+
+      // Stash old positions
+      nodes.forEach(d => { d.x0 = d.x; d.y0 = d.y; });
+
+      // Auto-fit csak az első render után (hogy ne ugráljon kattintáskor)
+    }
+
+    // 1. render
+    update(root);
+
+    // Auto-fit / center egyszer (induláskor)
     const bounds = g.node().getBBox();
     const padding = 50;
 
@@ -214,7 +367,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     );
 
     const clampedScale = Math.max(0.25, Math.min(2.0, scale));
-
     const translateX = (width - bounds.width * clampedScale) / 2 - bounds.x * clampedScale;
     const translateY = (height - bounds.height * clampedScale) / 2 - bounds.y * clampedScale;
 
