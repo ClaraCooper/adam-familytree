@@ -38,7 +38,65 @@ window.addEventListener("DOMContentLoaded", async () => {
     if (!window.d3) throw new Error("A D3 nem töltődött be (CDN hiba vagy nincs internet).");
 
     // 👇 Ez direkt jelzi, hogy EZ a JS fut (ha F12 Console-t megnézed)
-    console.log("✅ Colored app.js running (v=7)");
+    console.log("✅ Colored app.js running (v=7)"); 
+    const BRANCH_LABELS = {
+  ROOT: "Ádám / gyökér",
+  CAIN: "Káin-ága",
+  SETH: "Sét-ága",
+  SHEM: "Sém-ága",
+  HAM: "Hám-ága",
+  JAPHETH: "Jáfet-ága",
+  JUDAH: "Júda-törzs (később)",
+  DAVIDIC: "Dávid-ház (később)",
+  LEVITE: "Lévi / papi ág (később)"
+};
+
+function renderLegend() {
+  const el = document.getElementById("legend");
+  if (!el) return;
+
+  const orderedKeys = [
+    "ROOT","CAIN","SETH",
+    "SHEM","HAM","JAPHETH",
+    "JUDAH","DAVIDIC","LEVITE"
+  ];
+
+  const rows = orderedKeys.map(k => {
+    const color = BRANCH_COLORS[k] || BRANCH_COLORS.DEFAULT;
+    const label = BRANCH_LABELS[k] || k;
+    return `
+      <div class="row">
+        <span class="swatch" style="border-color:${color}"></span>
+        <span>${label}</span>
+      </div>
+    `;
+  }).join("");
+
+  el.innerHTML = `
+    <h3>Jelmagyarázat</h3>
+    <div class="group-title">Ágak (színek)</div>
+    ${rows}
+
+    <div class="group-title">Jelölések</div>
+    <div class="row">
+      <span class="line" style="border-top-color:#111827"></span>
+      <span>alap kapcsolat</span>
+    </div>
+    <div class="row">
+      <span class="line dotted" style="border-top-color:#111827"></span>
+      <span><b>anyai ág</b> (Lukács-végpontnál) + “M” jel</span>
+    </div>
+    <div class="row">
+      <span class="swatch" style="border-color:#111827; border-width:3px;"></span>
+      <span><b>kiemelt fővonal</b> (mainline)</span>
+    </div>
+
+    <div class="note">
+      Nimród kiemelését majd akkor tesszük hozzá, amikor ténylegesen felvesszük a fába.
+    </div>
+  `;
+}
+
 
     const width = container.clientWidth || 900;
     const height = container.clientHeight || 600;
