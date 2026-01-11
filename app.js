@@ -2,7 +2,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("tree-container");
   const status = document.getElementById("status");
 
-  const setStatus = (msg) => { if (status) status.textContent = msg || ""; };
+  const setStatus = (msg) => {
+    if (status) status.textContent = msg || "";
+  };
 
   try {
     if (!container) throw new Error("Nem találom a #tree-container elemet.");
@@ -11,99 +13,115 @@ window.addEventListener("DOMContentLoaded", async () => {
     const width = container.clientWidth || 900;
     const height = container.clientHeight || 600;
 
-    const svg = d3.select(container)
+    const svg = d3
+      .select(container)
       .append("svg")
       .attr("width", width)
       .attr("height", height);
 
     const g = svg.append("g");
 
-    const zoom = d3.zoom()
+    // Zoom viselkedés
+    const zoom = d3
+      .zoom()
       .scaleExtent([0.2, 4])
       .on("zoom", (event) => g.attr("transform", event.transform));
 
     svg.call(zoom);
 
-    const res = await fetch("./data.json?v=2", { cache: "no-store" });
+    // Adatok betöltése
+    const res = await fetch("./data.json", { cache: "no-store" });
     if (!res.ok) throw new Error(`A data.json nem tölthető be (HTTP ${res.status}).`);
     const data = await res.json();
 
+    // Layout
     const root = d3.hierarchy(data);
-    const treeLayout = d3.tree().nodeSize([130, 170]);
+    const treeLayout = d3.tree().nodeSize([110, 170]); // vízszintes / függőleges távolság
     treeLayout(root);
 
-    // Links
+    // Linkek
     g.selectAll(".link")
       .data(root.links())
       .enter()
       .append("path")
       .attr("class", "link")
-      .attr("d", d3.linkVertical().x(d => d.x).y(d => d.y));
+      .attr(
+        "d",
+        d3.linkVertical()
+          .x((d) => d.x)
+          .y((d) => d.y)
+      );
 
-    // Nodes
-    const node = g.selectAll(".node")
+    // Node csoport
+    const node = g
+      .selectAll(".node")
       .data(root.descendants())
       .enter()
       .append("g")
       .attr("class", "node")
-      .attr("transform", d => `translate(${d.x},${d.y})`);
+      .attr("transform", (d) => `translate(${d.x},${d.y})`);
 
-    // 1) Rect placeholder (majd méretre állítjuk)
-    const rect = node.append("rect")
-      .attr("y", -16)
-      .attr("height", 32)
-      .attr("rx", 8);
-
-    // 2) Text: BALRA IGAZÍTOTT, DE MI TESSZÜK KÖZÉPRE a dobozon belül (x-et számolunk)
-    const text = node.append("text")
+    // Szöveg először (hogy mérni tudjuk a szélességet)
+    node
+      .append("text")
+      .attr("x", 0)
       .attr("y", 0)
       .attr("dy", "0.35em")
-      .attr("text-anchor", "start") // fontos: így kiszámítható az x
-      .text(d => d.data.name ?? "");
+      .attr("text-anchor", "middle") // ✅ valódi középre igazítás
+      .text((d) => d.data.name ?? "");
 
-    // 3) Méretezés + pozicionálás: a doboz középre, a szöveg belülre (paddinggel)
-    const MIN_W = 120;
-    const PAD_X = 18;
+    // Doboz a szöveg alá, automatikus szélességgel
+    node
+      .insert("rect", "text")
+      .attr("y", -16)
+      .attr("height", 32)
+      .attr("rx", 8)
+      .each(function () {
+        const parent = this.parentNode;
+        const textEl = d3.select(parent).select("text").node();
 
-    node.each(function () {
-      const n = d3.select(this);
-      const t = n.select("text").node();
+        // Ha valamiért nem mérhető, essünk vissza fix szélességre
+        let textWidth = 0;
+        try {
+          textWidth = textEl ? textEl.getComputedTextLength() : 0;
+        } catch {
+          textWidth = 0;
+        }
 
-      let textW = 0;
-      try { textW = t ? t.getComputedTextLength() : 0; } catch { textW = 0; }
+        const minW = 120;
+        const pad = 26; // belső padding
+        const boxW = Math.max(minW, textWidth + pad);
 
-      const boxW = Math.max(MIN_W, textW + PAD_X * 2);
+        d3.select(this)
+          .attr("x", -boxW / 2)
+          .attr("width", boxW);
+      });
 
-      // doboz középre
-      n.select("rect")
-        .attr("x", -boxW / 2)
-        .attr("width", boxW);
-
-      // szöveg balról induljon, de a doboz bal belső szélétől
-      n.select("text")
-        .attr("x", -boxW / 2 + PAD_X);
-    });
-
-    // Auto-fit / center
+    // ✅ AUTO-FIT / AUTO-CENTER
+    // A teljes tartalom befoglaló téglalapja
     const bounds = g.node().getBBox();
-    const padding = 60;
+    const fullWidth = bounds.width;
+    const fullHeight = bounds.height;
 
+    const padding = 60; // biztonsági margó
     const scale = Math.min(
-      (width - padding) / bounds.width,
-      (height - padding) / bounds.height
+      (width - padding) / fullWidth,
+      (height - padding) / fullHeight
     );
 
+    // Ésszerű korlátok
     const clampedScale = Math.max(0.25, Math.min(2.0, scale));
 
-    const translateX = (width - bounds.width * clampedScale) / 2 - bounds.x * clampedScale;
-    const translateY = (height - bounds.height * clampedScale) / 2 - bounds.y * clampedScale;
+    // Középre igazítás úgy, hogy a bounds.x/y-t is figyelembe vesszük
+    const translateX = (width - fullWidth * clampedScale) / 2 - bounds.x * clampedScale;
+    const translateY = (height - fullHeight * clampedScale) / 2 - bounds.y * clampedScale;
 
     svg.call(
       zoom.transform,
       d3.zoomIdentity.translate(translateX, translateY).scale(clampedScale)
     );
 
-    setStatus("");
+    setStatus(""); // ok
   } catch (err) {
     console.error(err);
     setStatus(`Hiba: ${err?.message || String(err)}`);
